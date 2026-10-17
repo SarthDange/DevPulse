@@ -9,12 +9,25 @@
 </head>
 <body>
   <header>
-    <div>
+  <div class="brand">
+    <svg class="brand-logo"
+         viewBox="0 0 40 40"
+         aria-hidden="true">
+      <rect x="1" y="1" width="38" height="38" rx="11"
+            fill="none" stroke="currentColor"
+            stroke-opacity=".18"/>
+      <path d="M8 21h7l4-8 5 15 4-9h4"
+            fill="none" stroke="currentColor"
+            stroke-width="2.4" stroke-linecap="round"
+            stroke-linejoin="round"/>
+    </svg>
+    <div class="brand-copy">
       <h1>DevPulse</h1>
       <p>Browser diagnostics</p>
     </div>
-    <button id="clear-history" type="button">Clear history</button>
-  </header>
+  </div>
+  <button id="clear-history" type="button">Clear history</button>
+</header>
 
   <main>
     <div class="status-row">
@@ -27,7 +40,7 @@
 
     <div class="filters">
       <label class="sr-only" for="event-search">Search diagnostics</label>
-      <input id="event-search" type="search" placeholder="Search messages or origins…">
+      <input id="event-search" type="search" placeholder="⌕  Search messages, files, or pages…">
       <label class="sr-only" for="type-filter">Filter by event type</label>
       <select id="type-filter">
         <option value="all">All event types</option>
@@ -38,7 +51,7 @@
       </select>
     </div>
 
-    <p id="empty-state">No events recorded yet. Trigger a test error on a website.</p>
+    <p id="empty-state">No diagnostics yet.<br>Open a website and trigger an error to see it here.</p>
     <p id="no-matches" hidden>No events match your search and filter.</p>
     <p id="status" role="status" aria-live="polite"></p>
 
