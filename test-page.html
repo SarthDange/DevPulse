@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DevPulse Test Page</title>
+</head>
+<body>
+  <h1>DevPulse Test Page</h1>
+
+  <button id="test-error">Trigger JavaScript error</button>
+  <button id="test-http">Trigger HTTP 404</button>
+  <button id="test-network">Trigger network failure</button>
+  <button id="test-redaction">Test secret redaction</button>
+
+  <script>
+    document.getElementById("test-error").addEventListener("click", () => {
+      setTimeout(() => {
+        throw new Error("DevPulse test: intentional JavaScript error");
+      }, 0);
+    });
+
+    document.getElementById("test-http").addEventListener("click", async () => {
+      try {
+        const response = await fetch("/devpulse-missing-endpoint");
+        console.log("Test request HTTP status:", response.status);
+      } catch (error) {
+        console.log("Test request failed:", error.message);
+      }
+
+    document.getElementById("test-network").addEventListener("click", async () => {
+    try {
+        await fetch("http://127.0.0.1:1/devpulse-network-test");
+    } catch (error) {
+        console.log("Expected network failure:", error.message);
+    }
+    });  
+        });
+    document.getElementById("test-redaction").addEventListener("click", () => {
+  setTimeout(() => {
+    throw new Error(
+      "DevPulse fake test: api_key=FAKE_KEY_123 password=FAKE_PASS_456"
+    );
+  }, 0);
+});
+  </script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+
+:root {
+  color-scheme: light;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #202631;
+  background: #f5f7fb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 260px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 16px;
+  background: #ffffff;
+  border-bottom: 1px solid #e1e6ef;
+}
+
+h1 {
+  margin: 0;
+  font-size: 22px;
+}
+
+header p {
+  margin: 4px 0 0;
+  color: #697386;
+  font-size: 13px;
+}
+
+button {
+  padding: 8px 11px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #263247;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #edf2f8;
+}
+
+main {
+  padding: 16px;
+}
+
+.status-row,
+.event-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.status-row {
+  margin-bottom: 14px;
+  color: #586477;
+  font-size: 13px;
+}
+
+#empty-state {
+  padding: 24px 12px;
+  text-align: center;
+  color: #697386;
+  font-size: 14px;
+}
+
+#status {
+  color: #475569;
+  font-size: 13px;
+}
+
+.event-card {
+  margin-bottom: 12px;
+  padding: 14px;
+  border: 1px solid #e0e6ef;
+  border-radius: 12px;
+  background: #ffffff;
+  overflow-wrap: anywhere;
+}
+
+.event-heading strong {
+  font-size: 14px;
+}
+
+.event-heading time {
+  color: #697386;
+  font-size: 11px;
+  text-align: right;
+}
+
+.event-message {
+  margin: 12px 0;
+  color: #a52b35;
+  font-size: 14px;
+  white-space: pre-wrap;
+}
+
+.event-origin,
+.event-filename,
+.event-location {
+  margin: 7px 0 0;
+  color: #697386;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+
+.toolbar, .event-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.filters {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 14px;
+}
+
+.filters input, .filters select {
+  width: 100%;
+  min-width: 0;
+  padding: 10px 11px;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  background: #fff;
+  color: inherit;
+  font: inherit;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.event-actions {
+  margin-top: 12px;
+}
+
+.analyze-button {
+  border-color: #4758d6;
+  background: #4758d6;
+  color: white;
+}
+
+.analyze-button:hover {
+  background: #3545b8;
+}
+
+button:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+#analysis-panel {
+  margin-top: 18px;
+  padding: 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  background: #eef2ff;
+  overflow-wrap: anywhere;
+}
+
+#analysis-panel h2 {
+  margin-top: 0;
+  font-size: 17px;
+}
+
+#analysis-result h3 {
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+#analysis-result p, #analysis-result li, #no-matches {
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+#analysis-result li {
+  margin: 6px 0;
+}
+
+#no-matches {
+  color: #697386;
+  text-align: center;
+  padding: 18px 8px;
+}
+
+.event-card details {
+  margin-top: 10px;
+  color: #697386;
+  font-size: 12px;
+}
+
+.event-card details summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.event-card details p {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 320px) {
+  header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
