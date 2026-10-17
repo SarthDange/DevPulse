@@ -5,56 +5,349 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>DevPulse Settings</title>
+
   <style>
-    body {
-      max-width: 650px;
-      margin: 40px auto;
-      padding: 0 20px;
-      font: 16px/1.5 system-ui, sans-serif;
-      color: #202631;
-      background: #f5f7fb;
+    :root {
+      color-scheme: light;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --bg: #f4f5fb;
+      --surface: #ffffff;
+      --text: #202238;
+      --muted: #70748b;
+      --border: rgba(104, 111, 151, 0.19);
+      --accent: #3D566B;
+      --accent-hover: #324858;
+      --accent-soft: rgba(61, 86, 107, 0.10);
+      --input: #ffffff;
+      --shadow: 0 8px 28px rgba(43, 42, 87, 0.055);
+      --warning: #8a5b13;
+      --danger: #c83e54;
+      --radius: 15px;
     }
 
-    section {
-      margin: 20px 0;
-      padding: 20px;
-      border: 1px solid #dce3ed;
-      border-radius: 12px;
-      background: white;
+    @media (prefers-color-scheme: dark) {
+      :root {
+        color-scheme: dark;
+        --bg: #11121a;
+        --surface: #1d1e2b;
+        --text: #f1f0fb;
+        --muted: #a5a7bd;
+        --border: rgba(185, 185, 224, 0.14);
+        --accent: #91ABC0;
+        --accent-hover: #ADC2D3;
+        --accent-soft: rgba(145, 171, 192, 0.12);
+        --input: #141520;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.17);
+        --warning: #f2c16e;
+        --danger: #ff8795;
+      }
     }
 
-    label, input {
-      display: block;
-      width: 100%;
+    * {
       box-sizing: border-box;
     }
 
-    input {
-      margin: 8px 0 12px;
-      padding: 10px;
-      border: 1px solid #bbc6d5;
-      border-radius: 8px;
+    body {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 36px 22px 48px;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    header {
+      margin-bottom: 28px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--surface);
+      font-size: 17px;
+      letter-spacing: 0;
+    }
+    
+    .brand-mark img {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(25px, 5vw, 31px);
+      font-weight: 700;
+      letter-spacing: -0.045em;
+      line-height: 1.25;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    section {
+      margin: 18px 0;
+      padding: 23px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 17px;
+    }
+
+    .section-icon {
+      display: grid;
+      flex: 0 0 38px;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border-radius: 11px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 17px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+    }
+
+    .section-description {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .warning {
+      margin: 0 0 18px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--accent-soft);
+      color: var(--warning);
+      font-size: 13px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    input[type="password"] {
+      display: block;
+      width: 100%;
+      min-height: 42px;
+      margin: 0 0 13px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      outline: none;
+      background: var(--input);
+      color: var(--text);
+      font: inherit;
+      transition: border-color 150ms ease;
+    }
+
+    input[type="password"]:focus {
+      border-color: var(--accent);
+      outline: 2px solid var(--accent-soft);
+    }
+
+    input::placeholder {
+      color: var(--muted);
+      opacity: 0.8;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 4px;
     }
 
     button {
-      margin: 4px 6px 4px 0;
-      padding: 9px 13px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      background: white;
+      min-height: 38px;
+      padding: 9px 14px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--surface);
+      color: var(--text);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 150ms ease, border-color 150ms ease;
+    }
+
+    button:focus-visible,
+    input[type="checkbox"]:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    #save-key {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+    }
+
+    #save-key:hover {
+      background: var(--accent-hover);
+    }
+
+    #delete-key:hover {
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    #key-status {
+      margin: 17px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    #status,
+    #ai-status {
+      min-height: 1.5em;
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .privacy-copy {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      background: var(--accent-soft);
+    }
+
+    input[type="checkbox"] {
+      flex: 0 0 auto;
+      width: 17px;
+      height: 17px;
+      margin: 3px 0 0;
+      accent-color: var(--accent);
       cursor: pointer;
     }
 
-    #status { min-height: 1.5em; }
-    .warning { color: #7a4b00; }
+    .toggle-copy {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .toggle-copy label {
+      margin: 0;
+      cursor: pointer;
+    }
+
+    .toggle-copy p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    footer {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 24px 14px 32px;
+      }
+
+      section {
+        padding: 17px;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .actions button {
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
+      }
+    }
   </style>
 </head>
+
 <body>
   <main>
-    <h1>DevPulse settings</h1>
+    <header>
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <img src="../../icons/icon48.png" alt="">
+        </span>
+        DevPulse
+      </div>
+      <h1>Settings</h1>
+      <p class="subtitle">
+        Manage your AI integration and privacy preferences.
+      </p>
+    </header>
 
     <section aria-labelledby="api-key-heading">
-      <h2 id="api-key-heading">Gemini API key</h2>
+      <div class="section-heading">
+        <div class="section-icon" aria-hidden="true">⚿</div>
+        <div>
+          <h2 id="api-key-heading">Gemini API key</h2>
+          <p class="section-description">
+            Configure your optional AI connection.
+          </p>
+        </div>
+      </div>
 
       <p class="warning">
         Your key is stored in Chrome extension-local storage, which is
@@ -71,34 +364,49 @@
         placeholder="Enter your Gemini API key"
       >
 
-      <button id="save-key" type="button">Save key</button>
-      <button id="delete-key" type="button">Delete saved key</button>
+      <div class="actions">
+        <button id="save-key" type="button">Save key</button>
+        <button id="delete-key" type="button">Delete saved key</button>
+      </div>
 
       <p id="key-status">Checking saved-key status…</p>
       <p id="status" role="status" aria-live="polite"></p>
     </section>
 
-    <section>
-      <h2>Privacy</h2>
-      <p>
+    <section aria-labelledby="privacy-heading">
+      <div class="section-heading">
+        <div class="section-icon" aria-hidden="true">◈</div>
+        <div>
+          <h2 id="privacy-heading">Privacy &amp; permissions</h2>
+          <p class="section-description">
+            You're in control of when diagnostic data is shared.
+          </p>
+        </div>
+      </div>
+
+      <p class="privacy-copy">
         AI diagnosis is optional. Only a selected, sanitized diagnostic
         event should be sent to Gemini when you explicitly request analysis.
       </p>
-      <p>
+      <p class="privacy-copy">
         Saving a key does not enable AI or grant network permission.
       </p>
-      
-      <div>
-        <label>
-          <input id="enable-ai" type="checkbox">
-          Enable optional Gemini AI analysis
-        </label>
-        <p id="ai-status" role="status" aria-live="polite">
-          AI analysis is disabled.
-        </p>
-      </div>
 
+      <div class="toggle-row">
+        <input id="enable-ai" type="checkbox">
+        <div class="toggle-copy">
+          <label for="enable-ai">Enable optional Gemini AI analysis</label>
+          <p>
+            Analysis is only sent when you explicitly request it.
+          </p>
+          <p id="ai-status" role="status" aria-live="polite">
+            AI analysis is disabled.
+          </p>
+        </div>
+      </div>
     </section>
+
+    <footer>DevPulse · Developer diagnostics, with privacy in mind.</footer>
   </main>
 
   <script src="options.js"></script>
