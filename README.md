@@ -1,56 +1,100 @@
 # DevPulse
 
-DevPulse is a Manifest V3 Chrome extension prototype for capturing common browser-side JavaScript errors and network failures, displaying them in a side panel, and optionally requesting an AI-assisted diagnosis.
+**A Chrome extension for smarter browser debugging.**
 
-> **Status:** Working prototype. Core capture, history, optional Gemini analysis, settings, search/filter, copy, and JSON export are implemented; final regression and security testing is still required.
+## Problem Statement
 
-## Project goals
-- Capture uncaught JavaScript errors and unhandled promise rejections.
-- Observe selected `fetch()` and `XMLHttpRequest` outcomes where technically possible.
-- Show events in a Chrome Side Panel.
-- Optionally request a structured Gemini diagnosis.
-- Preserve raw diagnostic information when AI is unavailable.
-- Minimize permissions and data collection.
+Debugging web applications often means switching between the browser console and network tools to find errors, understand failures, and organize diagnostic information. DevPulse aims to bring these signals into one searchable side panel, with optional AI-assisted analysis to help developers investigate issues faster.
 
-## Important security notes
-- `chrome.storage.local` is extension-scoped storage, **not an encrypted secret vault**. A user-provided API key avoids publishing your own key, but it is still stored locally in readable extension storage. Explain this to users and provide a delete-key control.
-- Never promise complete capture of all browser errors or exact identification of every CORS cause.
-- Do not collect cookies, authorization headers, request/response bodies, or full page content by default.
-- Treat page-derived messages and AI output as untrusted data.
-- A client-side 3-second cooldown is useful UX, but it is not a security boundary and cannot guarantee a provider quota. Add server-side limits if a shared backend is introduced. With a bring-your-own-key architecture, enforce local limits and rely on provider quotas for that user's key.
+## Features
 
-## Architecture
-See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+- **Error Monitoring** — Capture supported JavaScript errors and network failures.
+- **Search & Filter** — Find events by text and event type.
+- **History & Export** — Persist events, copy diagnostic summaries, and export JSON.
+- **AI Assistance** — Optionally analyze selected events using Google Gemini.
+- **Privacy Controls** — Sanitize diagnostic data and require explicit AI-analysis requests.
+- **Light & Dark Themes** — Follow the system appearance.
+
+## Screenshots
+
+![DevPulse side panel in light mode](docs/screenshots/sidepanel-light.png) ![DevPulse side panel in dark mode](docs/screenshots/sidepanel-dark.png)
+
+![DevPulse Settings](docs/screenshots/settings.png)
+
+## Installation
+
+1. Install [Google Chrome](https://www.google.com/chrome/) and [Git](https://git-scm.com/).
+2. Clone the repository:
+
+   ```bash
+   git clone https://github.com/SarthDange/DevPulse.git
+   cd DevPulse
+   ```
+
+3. Open `chrome://extensions` in Chrome.
+4. Enable **Developer mode**.
+5. Click **Load unpacked** and select the DevPulse project folder containing `manifest.json`.
+
+## Local Testing
+
+### Requirements
+
+- **Node.js:** 20 LTS or later recommended.
+- **npm:** Installed with Node.js. Check the versions available on your computer before testing.
+
+Open a terminal in the **DevPulse project root**—the folder containing `package.json` if present, `manifest.json`, and the test scripts.
+
+Check your versions:
+
+```bash
+node --version
+npm --version
+```
+
+### Run the test page
+
+1. In the terminal, run:
+
+   ```bash
+   npx http-server . -p 8000
+   ```
+
+2. If prompted to install `http-server`, review the prompt and confirm if you want to proceed.
+3. Keep the terminal open while the server is running.
+4. Open `http://localhost:8000/test-page.html` in Chrome.
+5. Use the page to trigger test errors and inspect DevPulse.
+6. When finished, return to the terminal and press **Ctrl+C** to stop the server.
+
+### Run the automated test scripts
+
+Open a **second terminal** in the same DevPulse project root and run:
+
+```bash
+node test-redaction.cjs
+node test-gemini-client.cjs
+```
+
+Run one command at a time and check its output before proceeding. These scripts test specific components; passing them does not guarantee that every extension feature works correctly.
+
+## Optional: Gemini Setup
+
+1. Create an API key in [Google AI Studio](https://aistudio.google.com/).
+2. Open DevPulse Settings and save the key.
+3. Enable AI analysis and grant any requested permission.
+4. Select a diagnostic event and explicitly request analysis.
+
+**Security note:** The key is stored in `chrome.storage.local`, which is not encrypted secret storage. Never commit or share it. Sanitization is best-effort, and data submitted for AI analysis is sent to Google.
 
 ## Documentation
-- [Frontend / side panel](docs/FRONTEND.md)
-- [Event capture](docs/EVENT_CAPTURE.md)
-- [Privacy and security](docs/PRIVACY_SECURITY.md)
-- [AI integration](docs/AI_INTEGRATION.md)
-- [Rate limiting and reliability](docs/RATE_LIMITING.md)
-- [Development workflow](docs/DEVELOPMENT.md)
 
-## Initial permissions
-The manifest requests `activeTab`, `scripting`, `storage`, and `sidePanel`. The extension should inject monitoring only after a user action on the active tab. Review the permissions again before publishing.
+- [Architecture](docs/ARCHITECTURE.md)
+- [Event Capture](docs/EVENT_CAPTURE.md)
+- [Privacy & Security](docs/PRIVACY_SECURITY.md)
+- [AI Integration](docs/AI_INTEGRATION.md)
+- [Development Guide](docs/DEVELOPMENT.md)
 
-## Current implementation status
-- [x] Manifest and extension loading smoke test
-- [x] Capture uncaught JavaScript errors and unhandled promise rejections
-- [x] Observe fetch and XHR HTTP/network outcomes where technically possible
-- [x] Validate incoming event messages and bound event storage
-- [x] Sanitize stored messages and origins; suppress recent duplicates
-- [x] Side-panel event timeline with search and type filters
-- [x] Copy event summary and export diagnostic history as JSON
-- [x] Clear history with confirmation
-- [x] User-configured Gemini key, opt-in permission, and structured AI analysis
-- [x] Validate AI response schema and render untrusted text safely
-- [x] Local redaction and Gemini-client tests
-- [ ] Full final regression, permission, and privacy test pass
+## Project Status
 
-## Local development
-1. Open `chrome://extensions`.
-2. Enable **Developer mode**.
-3. Choose **Load unpacked** and select this project folder.
-4. Reload the extension after manifest changes.
+**Working prototype.** Core features are implemented; broader regression and security testing remain ongoing.
 
-This scaffold does not yet implement the listed functionality.
+Built with JavaScript and Chrome Extension APIs.
